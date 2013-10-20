@@ -73,7 +73,7 @@ public class CSVReader {
      *
      * For use by other classes.
      *
-     * @return An int[][] that is the int[][] passed in
+     * @return An int[][] that is the CSV file passed into the program
      *
      */
     public static int[][] getCSVArr() throws IOException {
