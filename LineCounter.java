@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -16,9 +14,9 @@ import java.util.Scanner;
 public class LineCounter {
 
     //contains prompts for user input
-    public static void main(String[] args) throws IOException{
-        System.out.println("Please enter the filename you wish to run" +
-                           " LineCounter on.");
+    public static void main(String[] args) throws IOException {
+        System.out.println("Please enter the filename you wish to run"
+                         + " LineCounter on.");
         Scanner kb = new Scanner(System.in);
         String fileName = kb.nextLine();
         System.out.println(count(fileName));
@@ -44,12 +42,13 @@ public class LineCounter {
             boolean endsWithoutNewLine = false;
             while ((readChars = is.read(c)) != -1) {
                 for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n')
+                    if (c[i] == '\n') {
                         ++count;
+                    }
                 }
                 endsWithoutNewLine = (c[readChars - 1] != '\n');
             }
-            if(endsWithoutNewLine) {
+            if (endsWithoutNewLine) {
                 ++count;
             }
             return count;

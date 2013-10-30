@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 
 /**
@@ -21,10 +18,9 @@ public class CSVReader {
     //jagged array to represent the CSV file
     private static int[][] arr;
 
-    public static void main(String[] args) throws FileNotFoundException,
-            IOException  {
+    public static void main(String[] args) {
         CSVReader obj = new CSVReader();
-        obj.run();
+        obj.passInCSV();
         printer(arr);
     }
 
@@ -34,13 +30,19 @@ public class CSVReader {
      * @return A String representing the path of the passed in CSV file
      *
      */
-    public static String passInCSV() throws IOException {
-        System.out.println("Please enter CSV file name. If the file is not in" +
-                           " this Folder please type the entire file path.");
+    public void passInCSV() {
+        System.out.println("Please enter CSV file name. If the file is not in"
+                           + " this Folder please type the entire file path.");
         Scanner kb = new Scanner(System.in);
-        String fileName = kb.nextLine();
-        arr = new int[LineCounter.count(fileName)][];
-        return fileName;
+        String fileName = "";
+        try {
+            fileName = kb.nextLine();
+            arr = new int[LineCounter.count(fileName)][];
+            run(fileName);
+        } catch (IOException e) {
+            System.out.println("File not found, please try again");
+            passInCSV();
+        }
     }
 
     /**
@@ -51,20 +53,24 @@ public class CSVReader {
      * an int array and passed into the correct column of the jagged array.
      *
      */
-    public void run() throws FileNotFoundException, IOException {
-        String csvFile = passInCSV();
-        Scanner nl = new Scanner(new File(csvFile));
-        int count = 0;
-        while (nl.hasNextLine()) {
-            String str = nl.nextLine();
-            Scanner comma = new Scanner(str);
-            String[] split = str.split(",");
-            int[] numbers = new int[split.length];
-            for (int i =0; i<split.length; i++) {
-                numbers[i] = Integer.parseInt(split[i]);
+    public void run(String fileName) {
+        try {
+            Scanner nl = new Scanner(new File(fileName));
+            int count = 0;
+            while (nl.hasNextLine()) {
+                String str = nl.nextLine();
+                Scanner comma = new Scanner(str);
+                String[] split = str.split(",");
+                int[] numbers = new int[split.length];
+                for (int i = 0; i < split.length; i++) {
+                    numbers[i] = Integer.parseInt(split[i]);
+                }
+                arr[count] = numbers;
+                count++;
             }
-            arr[count] = numbers;
-            count++;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            System.exit(0);
         }
     }
 
@@ -78,7 +84,7 @@ public class CSVReader {
      */
     public static int[][] getCSVArr() throws IOException {
         CSVReader obj = new CSVReader();
-        obj.run();
+        obj.passInCSV();
         return arr;
     }
 
@@ -88,10 +94,10 @@ public class CSVReader {
      * @param arr An int[][] representing the array to be printed
      *
      */
-    public static void printer(int[][] arr){
+    public static void printer(int[][] arr) {
         System.out.println("CSV Output:");
-        for (int i=0; i<arr.length; i++) {
-            for (int j=0; j<arr[i].length; j++) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
                 System.out.print(arr[i][j] + " ");
             }
             System.out.println();
