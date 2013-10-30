@@ -25,10 +25,8 @@ public class CSVReader {
     }
 
     /**
-     * Method to prompt for user input and return the file path passed in.
-     *
-     * @return A String representing the path of the passed in CSV file
-     *
+     * Method to prompt for user input and run the run method using the file
+     * path passed in.
      */
     public void passInCSV() {
         System.out.println("Please enter CSV file name. If the file is not in"
@@ -51,6 +49,8 @@ public class CSVReader {
      * Creates Strings of the lines of the CSV file, splits those Strings by
      * commas to create a String array. The resulting array is then converted to
      * an int array and passed into the correct column of the jagged array.
+     *
+     * @param fileName A String representing the name of the file to scan
      *
      */
     public void run(String fileName) {
